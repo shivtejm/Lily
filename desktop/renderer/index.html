@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lily AI Assistant</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ═══════ FLOATING ORB (collapsed state) ═══════ -->
+  <div id="orb" class="orb">
+    <div class="orb-glow"></div>
+    <div class="orb-core">
+      <svg viewBox="0 0 40 40" class="orb-flower">
+        <defs>
+          <radialGradient id="petalGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"   stop-color="#c084fc"/>
+            <stop offset="100%" stop-color="#7c3aed"/>
+          </radialGradient>
+        </defs>
+        <g transform="translate(20,20)">
+          <ellipse rx="7" ry="12" fill="url(#petalGrad)" opacity="0.9" transform="rotate(0)"/>
+          <ellipse rx="7" ry="12" fill="url(#petalGrad)" opacity="0.85" transform="rotate(60)"/>
+          <ellipse rx="7" ry="12" fill="url(#petalGrad)" opacity="0.8" transform="rotate(120)"/>
+          <ellipse rx="7" ry="12" fill="url(#petalGrad)" opacity="0.75" transform="rotate(180)"/>
+          <ellipse rx="7" ry="12" fill="url(#petalGrad)" opacity="0.7" transform="rotate(240)"/>
+          <ellipse rx="7" ry="12" fill="url(#petalGrad)" opacity="0.65" transform="rotate(300)"/>
+          <circle r="5" fill="#e9d5ff"/>
+        </g>
+      </svg>
+    </div>
+    <div class="orb-ring"></div>
+  </div>
+
+  <!-- ═══════ MAIN PANEL (expanded state) ═══════ -->
+  <div id="panel" class="panel hidden">
+
+    <!-- Header -->
+    <header class="panel-header">
+      <div class="header-left">
+        <div class="header-avatar">
+          <svg viewBox="0 0 30 30" width="28" height="28">
+            <defs><radialGradient id="hg" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#c084fc"/><stop offset="100%" stop-color="#7c3aed"/></radialGradient></defs>
+            <g transform="translate(15,15)"><ellipse rx="5" ry="9" fill="url(#hg)" opacity=".9"/><ellipse rx="5" ry="9" fill="url(#hg)" opacity=".8" transform="rotate(60)"/><ellipse rx="5" ry="9" fill="url(#hg)" opacity=".7" transform="rotate(120)"/><ellipse rx="5" ry="9" fill="url(#hg)" opacity=".85" transform="rotate(180)"/><ellipse rx="5" ry="9" fill="url(#hg)" opacity=".75" transform="rotate(240)"/><ellipse rx="5" ry="9" fill="url(#hg)" opacity=".65" transform="rotate(300)"/><circle r="3.5" fill="#e9d5ff"/></g>
+          </svg>
+        </div>
+        <div class="header-info">
+          <h1>Lily</h1>
+          <span class="header-status" id="header-status">
+            <span class="status-dot online"></span>
+            <span id="status-text">Ready</span>
+          </span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="hdr-btn" id="btn-settings" title="Settings">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </button>
+        <button class="hdr-btn" id="btn-close" title="Collapse">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Chat Messages -->
+    <div class="chat-area" id="chat-area">
+      <!-- Welcome -->
+      <div class="welcome" id="welcome">
+        <div class="welcome-orb">
+          <svg viewBox="0 0 60 60" width="56" height="56">
+            <defs><radialGradient id="wg" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#c084fc"/><stop offset="100%" stop-color="#7c3aed"/></radialGradient></defs>
+            <g transform="translate(30,30)"><ellipse rx="10" ry="18" fill="url(#wg)" opacity=".9"/><ellipse rx="10" ry="18" fill="url(#wg)" opacity=".8" transform="rotate(60)"/><ellipse rx="10" ry="18" fill="url(#wg)" opacity=".7" transform="rotate(120)"/><ellipse rx="10" ry="18" fill="url(#wg)" opacity=".85" transform="rotate(180)"/><ellipse rx="10" ry="18" fill="url(#wg)" opacity=".75" transform="rotate(240)"/><ellipse rx="10" ry="18" fill="url(#wg)" opacity=".65" transform="rotate(300)"/><circle r="7" fill="#e9d5ff"/></g>
+          </svg>
+        </div>
+        <h2>Hey! I'm Lily</h2>
+        <p>Your personal AI assistant. I can control your PC, manage files, open apps, and much more — all offline!</p>
+        <div class="quick-actions">
+          <button class="qa-btn" data-msg="What can you do?">💡 Capabilities</button>
+          <button class="qa-btn" data-msg="Take a screenshot">📸 Screenshot</button>
+          <button class="qa-btn" data-msg="Show system info">💻 System Info</button>
+          <button class="qa-btn" data-msg="Open calculator">🧮 Calculator</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Input -->
+    <div class="input-area">
+      <div class="input-row">
+        <input type="text" id="msg-input" placeholder="Ask Lily anything…" autocomplete="off" spellcheck="false">
+        <button class="voice-btn" id="btn-voice" title="Hold to speak">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="1" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0014 0"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          <div class="voice-pulse"></div>
+        </button>
+        <button class="send-btn" id="btn-send" title="Send">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+        </button>
+      </div>
+      <div class="input-hint">
+        <span>Press <kbd>Enter</kbd> to send · <kbd>Alt+L</kbd> to toggle</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ SETTINGS PANEL ═══════ -->
+  <div id="settings-panel" class="settings-overlay hidden">
+    <div class="settings-card">
+      <div class="settings-header">
+        <h2>⚙️ Settings</h2>
+        <button class="hdr-btn" id="btn-settings-close">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="settings-body">
+        <div class="setting-group">
+          <label>AI Provider</label>
+          <select id="set-provider">
+            <option value="offline">Offline (Pattern Matching)</option>
+            <option value="ollama">Ollama (Local LLM)</option>
+            <option value="gemini">Google Gemini (Online)</option>
+          </select>
+          <small>Ollama must be installed and running at localhost:11434</small>
+        </div>
+        <div class="setting-group" id="group-ollama">
+          <label>Ollama Model</label>
+          <input type="text" id="set-model" value="llama3.2" placeholder="e.g. llama3.2, mistral, qwen2.5">
+        </div>
+        <div class="setting-group hidden" id="group-gemini">
+          <label>Gemini API Key</label>
+          <input type="password" id="set-gemini-key" placeholder="Paste your key here…">
+          <small><a href="https://aistudio.google.com/apikey" target="_blank" style="color:var(--accent)">Get a free API key here</a></small>
+          <label style="margin-top:10px">Gemini Model</label>
+          <input type="text" id="set-gemini-model" value="gemini-2.0-flash" placeholder="e.g. gemini-2.0-flash">
+        </div>
+        <div class="setting-group">
+          <label>Voice Output</label>
+          <select id="set-voice">
+            <option value="on">Enabled</option>
+            <option value="off">Disabled</option>
+          </select>
+        </div>
+        <div class="setting-group">
+          <label>Voice</label>
+          <select id="set-voice-name"></select>
+          <small>Available system voices</small>
+        </div>
+        <div class="setting-group">
+          <button class="danger-btn" id="btn-clear-history">🗑️ Clear Chat History</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

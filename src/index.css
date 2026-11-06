@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --bg-primary: #0f0c29;
+  --bg-secondary: #1a1640;
+  --bg-glass: rgba(255, 255, 255, 0.06);
+  --bg-glass-hover: rgba(255, 255, 255, 0.1);
+  --border-glass: rgba(255, 255, 255, 0.1);
+  --border-glass-hover: rgba(255, 255, 255, 0.2);
+  --text-primary: #f0eef5;
+  --text-secondary: #a8a3b8;
+  --text-muted: #6b6580;
+  --accent-purple: #c084fc;
+  --accent-blue: #8ec5fc;
+  --accent-gradient: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+  --accent-gradient-vivid: linear-gradient(135deg, #c084fc 0%, #60a5fa 100%);
+  --glow-purple: rgba(192, 132, 252, 0.3);
+  --glow-blue: rgba(142, 197, 252, 0.2);
+  --success: #4ade80;
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 380px;
+  min-height: 520px;
+  overflow-x: hidden;
+  background: linear-gradient(160deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+}
+
+#root {
+  width: 100%;
+  min-height: 520px;
+  display: flex;
+  flex-direction: column;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}

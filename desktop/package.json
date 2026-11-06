@@ -1,0 +1,17 @@
+{
+  "name": "lily-desktop",
+  "version": "1.0.0",
+  "description": "Lily — Your Personal AI Assistant for Windows. Controls your entire PC with voice and text.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "^33.2.0"
+  },
+  "author": "Lily AI",
+  "license": "MIT",
+  "keywords": ["ai", "assistant", "desktop", "voice", "automation"]
+}

@@ -1,0 +1,309 @@
+/* ═══════════════════════════════════════════
+   Lily AI Assistant - Content Script Styles
+   Interactive Chat + Glassmorphism
+   ═══════════════════════════════════════════ */
+
+#lily-assistant-root {
+  position: fixed;
+  z-index: 999999;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.4;
+}
+
+.lily-glass {
+  background: rgba(15, 12, 41, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
+  color: #f0eef5;
+}
+
+/* ── Floating Bubble ── */
+
+#lily-bubble {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  cursor: move;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.lily-drag-handle {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.lily-dragging {
+  cursor: grabbing !important;
+  opacity: 0.9;
+}
+
+.lily-dragging .lily-orb {
+  animation: none;
+  transform: scale(1.1);
+}
+
+#lily-bubble:hover {
+  transform: scale(1.1);
+}
+
+.lily-orb {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(142, 197, 252, 0.5);
+  animation: lily-pulse 2s infinite ease-in-out;
+  transition: all 0.3s;
+}
+
+.lily-orb-active {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ffa500 100%);
+  box-shadow: 0 0 25px rgba(255, 107, 107, 0.6);
+  animation: lily-pulse-active 0.8s infinite ease-in-out;
+}
+
+@keyframes lily-pulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.8; }
+}
+
+@keyframes lily-pulse-active {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.lily-status {
+  position: absolute;
+  bottom: 5px;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ── Panel ── */
+
+#lily-panel {
+  position: fixed;
+  bottom: 100px;
+  right: 30px;
+  width: 360px;
+  max-height: 520px;
+  display: flex;
+  flex-direction: column;
+  transition: opacity 0.3s, transform 0.3s;
+  overflow: hidden;
+  cursor: move;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#lily-panel.hidden {
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+}
+
+/* ── Header ── */
+
+.lily-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+}
+
+.lily-header span {
+  font-weight: 600;
+  font-size: 14px;
+  background: linear-gradient(135deg, #e0c3fc, #8ec5fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.lily-header-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.lily-icon-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.lily-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+#lily-close {
+  font-size: 20px;
+}
+
+/* ── Chat Area ── */
+
+.lily-chat {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 360px;
+  min-height: 200px;
+}
+
+.lily-chat::-webkit-scrollbar {
+  width: 4px;
+}
+
+.lily-chat::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+.lily-msg {
+  display: flex;
+  max-width: 88%;
+  animation: lily-msg-in 0.25s ease;
+}
+
+@keyframes lily-msg-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.lily-msg-lily {
+  align-self: flex-start;
+}
+
+.lily-msg-user {
+  align-self: flex-end;
+}
+
+.lily-msg-bubble {
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 13px;
+  line-height: 1.45;
+  word-wrap: break-word;
+}
+
+.lily-msg-lily .lily-msg-bubble {
+  background: rgba(192, 132, 252, 0.12);
+  border: 1px solid rgba(192, 132, 252, 0.2);
+  border-bottom-left-radius: 4px;
+  color: #e0d5f0;
+}
+
+.lily-msg-user .lily-msg-bubble {
+  background: rgba(142, 197, 252, 0.15);
+  border: 1px solid rgba(142, 197, 252, 0.2);
+  border-bottom-right-radius: 4px;
+  color: #d5e8f5;
+}
+
+/* ── Input Bar ── */
+
+.lily-input-bar {
+  display: flex;
+  gap: 8px;
+  padding: 12px 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+}
+
+#lily-text-input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 8px 12px;
+  color: #f0eef5;
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#lily-text-input:focus {
+  border-color: rgba(192, 132, 252, 0.4);
+}
+
+#lily-text-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+#lily-send-btn {
+  background: linear-gradient(135deg, #c084fc, #60a5fa);
+  border: none;
+  color: #1a1640;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s, transform 0.2s;
+  flex-shrink: 0;
+}
+
+#lily-send-btn:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+
+/* ── Filled Field Highlight ── */
+
+.lily-filled {
+  outline: 2px solid rgba(192, 132, 252, 0.7) !important;
+  outline-offset: 1px;
+  box-shadow: 0 0 12px rgba(192, 132, 252, 0.3) !important;
+  animation: lily-fill-glow 0.5s ease-out;
+}
+
+@keyframes lily-fill-glow {
+  0% {
+    outline-color: rgba(192, 132, 252, 1);
+    box-shadow: 0 0 20px rgba(192, 132, 252, 0.5);
+  }
+  100% {
+    outline-color: rgba(192, 132, 252, 0.7);
+    box-shadow: 0 0 12px rgba(192, 132, 252, 0.3);
+  }
+}
